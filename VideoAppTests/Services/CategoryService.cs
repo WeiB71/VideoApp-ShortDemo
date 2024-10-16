@@ -18,10 +18,13 @@ namespace VideoAppTests.Services
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int id)
+        public async Task<Category> GetCategoryByNameAsync(string name)
         {
-            return await _context.Categories.FindAsync(id);
+            return await _context.Categories
+                .Where(c => c.Name == name)
+                .FirstOrDefaultAsync(); 
         }
+
 
         public async Task<Category> AddCategoryAsync(Category category)
         {

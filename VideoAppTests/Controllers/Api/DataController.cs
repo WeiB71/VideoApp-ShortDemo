@@ -39,7 +39,7 @@ namespace VideoAppTests.Controllers.Api
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadVideo([FromForm] IFormFile file, [FromForm] string title, [FromForm] string description, [FromForm] int categoryId)
+        public async Task<IActionResult> UploadVideo([FromForm] IFormFile file, [FromForm] string title, [FromForm] string description, [FromForm] string categoryName, [FromForm] string thumbnail)
         {
             if (file == null || file.Length == 0)
             {
@@ -69,15 +69,20 @@ namespace VideoAppTests.Controllers.Api
                 await file.CopyToAsync(stream);
             }
 
-            var categoryData = await _categoryService.GetCategoryByIdAsync(categoryId);
+            var categoryData = await _categoryService.GetCategoryByNameAsync(categoryName);
+            if (categoryData == null)
+            {
+                var category = new Category { Name= categoryName };
+                categoryData = await _categoryService.AddCategoryAsync(category);
+            }
 
             var video = new Video
             {
                 Title = title,
                 Description = description,
                 Category = categoryData,
+                Thumbnail = thumbnail,
                 FilePath = filePath,
-                ThumbnailPath = GenerateThumbnail(filePath) // Assume you have a method to generate thumbnail
             };
 
             await _videoService.AddVideoAsync(video);
@@ -85,11 +90,6 @@ namespace VideoAppTests.Controllers.Api
             return Ok(new { id = video.Id });
         }
 
-        private string GenerateThumbnail(string videoPath)
-        {
-            // Implement thumbnail generation logic here using a library like FFmpeg
-            // For now, let's just return a placeholder path
-            return Path.Combine("uploads", "thumbnails", Path.GetFileNameWithoutExtension(videoPath) + ".jpg");
-        }
+      
     }
 }

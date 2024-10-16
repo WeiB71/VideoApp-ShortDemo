@@ -1,1 +1,11 @@
-<p>streaming-page works!</p>
+<div *ngIf="videoUrl">
+    <h1>Streaming Video</h1>
+    <button (click)="goBack()" class="btn btn-primary">Back</button>
+    <video controls [src]="videoUrl" width="600" height="400">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div *ngIf="!videoUrl">
+    <p>Loading video...</p>
+  </div>
+  

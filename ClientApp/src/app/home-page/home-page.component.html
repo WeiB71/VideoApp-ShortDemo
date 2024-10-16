@@ -12,8 +12,8 @@
           />
           <div class="card-body">
             <h5 class="card-title">{{ video.title }}</h5>
-            <p class="card-text">{{ video.description | slice:0:160 }}{{ video.description.length > 160 ? '...' : '' }}</p>
-            <p class="card-text"><small class="text-muted">{{ video.categories.join(', ') }}</small></p>
+            <p class="card-text">{{ video.description | slice:0:160 }}/p>
+            <p class="card-text"><small class="text-muted">{{ video.categoryName}}</small></p>
           </div>
         </div>
       </div>

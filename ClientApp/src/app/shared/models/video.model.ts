@@ -7,5 +7,7 @@ export interface Video {
     filePath?: string;
     thumbnailPath?: string;
     categoryId?: string; // Add this property
+    categoryName: string;
+    thumbnail: string;
   }
   
