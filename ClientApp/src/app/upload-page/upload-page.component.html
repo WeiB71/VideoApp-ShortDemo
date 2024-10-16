@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <h2>Upload Video</h2>
+    <form (ngSubmit)="onSubmit()" #uploadForm="ngForm">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" class="form-control" [(ngModel)]="video.title" name="title" required />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" class="form-control" [(ngModel)]="video.description" name="description" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" class="form-select" [(ngModel)]="video.categoryId" name="category" required>
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="file" class="form-label">Video File</label>
+        <input type="file" id="file" class="form-control" (change)="onFileChange($event)" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+  
