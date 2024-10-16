@@ -89,6 +89,13 @@ namespace VideoAppTests.Controllers.Api
 
             return Ok(new { id = video.Id });
         }
+        
+        [HttpGet("categories")]
+        public async Task<ActionResult<List<Category>>> GetCategories()
+        {
+            var videos = await _categoryService.GetAllCategoriesAsync();
+            return Ok(videos);
+        }
 
       
     }

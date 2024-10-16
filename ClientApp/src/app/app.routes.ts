@@ -4,7 +4,9 @@ import { StreamingPageComponent } from './streaming-page/streaming-page.componen
 import { UploadPageComponent } from './upload-page/upload-page.component';
 
 export const routes: Routes = [
-    { path: 'home', component: HomePageComponent },
-    { path: 'stream', component: StreamingPageComponent },
-    { path: 'upload', component: UploadPageComponent },
-  ];
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirect root to home
+  { path: 'home', component: HomePageComponent },
+  { path: 'stream', component: StreamingPageComponent },
+  { path: 'upload', component: UploadPageComponent },
+  { path: '**', redirectTo: 'home' }, // Wildcard route to handle unknown routes
+];

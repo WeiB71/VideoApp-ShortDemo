@@ -6,7 +6,6 @@ export interface Video {
     description?: string;
     filePath?: string;
     thumbnailPath?: string;
-    categoryId?: string; // Add this property
     categoryName: string;
     thumbnail: string;
   }

@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { VideoService } from '../shared/service/video.service';
 import { Category } from '../shared/models/category.model';
-import { BrowserModule } from '@angular/platform-browser';
+
 import { FormsModule } from '@angular/forms';
 import { VideoThumbnailService } from '../shared/service/video-thumbnail.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-upload-page',
   standalone: true,
-  imports: [BrowserModule, FormsModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './upload-page.component.html',
   styleUrls: ['./upload-page.component.scss'],
 })
@@ -16,16 +18,20 @@ export class UploadPageComponent {
   video = {
     title: '',
     description: '',
-    categoryId: '',
+    categoryName: '',
+    thumbnail: '',
     file: null as File | null,
   };
 
   categories: Category[] = []; 
-  thumbnailUrl: string | null = null; 
+  filteredCategories: Category[] = []; 
+  thumbnailUrl: string | null = null;
+
 
   constructor(private videoService: VideoService, private videoThumbnailService: VideoThumbnailService) {}
 
   ngOnInit(): void {
+    console.log ("init categories");
     this.loadCategories(); // Load categories when the component initializes
   }
 
@@ -48,6 +54,13 @@ export class UploadPageComponent {
     }
   }
 
+  filterCategories(): void {
+    const query = this.video.categoryName.toLowerCase();
+    this.filteredCategories = this.categories.filter(category =>
+      category.name?.toLowerCase().includes(query)
+    );
+  }
+
   generateThumbnail(file: File): void {
     const videoUrl = URL.createObjectURL(file);
 
@@ -64,11 +77,25 @@ export class UploadPageComponent {
 
   onSubmit(): void {
     const formData = new FormData();
-    formData.append('file', this.video.file as File);
-    formData.append('title', this.video.title);
-    formData.append('description', this.video.description);
-    formData.append('categoryId', this.video.categoryId);
-
+    
+    // Ensure all fields are correctly appended
+    if (this.video.file) {
+      formData.append('file', this.video.file as File);
+    } else {
+      console.error('No video file selected.');
+      return;
+    }
+    
+    formData.append('title', this.video.title || '');
+    formData.append('description', this.video.description || '');
+    formData.append('categoryName', this.video.categoryName || '');
+    formData.append('thumbnail', this.thumbnailUrl || '');
+  
+    // Log to ensure all form data is present
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+  
     this.videoService.uploadVideo(formData).subscribe(
       (response: any) => {
         console.log('Video uploaded successfully:', response);
@@ -78,4 +105,6 @@ export class UploadPageComponent {
       }
     );
   }
+  
+  
 }
