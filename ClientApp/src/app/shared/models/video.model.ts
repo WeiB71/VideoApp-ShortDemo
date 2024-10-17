@@ -8,5 +8,6 @@ export interface Video {
     thumbnailPath?: string;
     categoryName: string;
     thumbnail: string;
+    fileName: string;
   }
   

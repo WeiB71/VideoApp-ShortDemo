@@ -46,6 +46,9 @@ namespace VideoAppTests.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("FileName")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FilePath")
                         .HasColumnType("TEXT");
 

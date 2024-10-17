@@ -1,12 +1,38 @@
-.video-list {
-    padding: 20px;
-  }
-  
-  .card {
-    margin: 10px;
-  }
-  
-  .card-img-top {
-    object-fit: cover;
-  }
-  
+.video-library {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light background to make the cards stand out */
+}
+
+.video-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 10px;
+}
+
+.video-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle hover effect */
+}
+
+.video-card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.video-card .card-body {
+  padding: 15px;
+  text-align: center;
+}
+
+.video-card .card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.video-card .card-text {
+  color: #6c757d;
+}
+
+.video-card .text-muted {
+  font-size: 0.875rem;
+}

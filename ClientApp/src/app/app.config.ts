@@ -5,7 +5,8 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 
 export const AppConfig = {
-  apiUrl: 'http://localhost:5231/api/data', // Replace with your actual API URL
+  apiUrl: 'http://localhost:5231/api/data', 
+  videoUrl: 'http://localhost:5231/uploads/', 
 };
 
 export const appConfig: ApplicationConfig = {

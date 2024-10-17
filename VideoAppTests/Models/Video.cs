@@ -6,5 +6,6 @@ public class Video {
     public string? Description { get; set; }
     public Category? Category { get; set; }
     public string? FilePath { get; set; }
+    public string? FileName { get; set; }
     public string? Thumbnail { get; set; }
 }

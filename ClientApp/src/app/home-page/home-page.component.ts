@@ -17,22 +17,23 @@ export class HomePageComponent {
   constructor(private videoService: VideoService, private router: Router) {}
 
   ngOnInit(): void {
-    this.fetchVideos(); // Fetch videos on component initialization
+    this.fetchVideos(); 
   }
 
   fetchVideos(): void {
     this.videoService.getVideos().subscribe({
       next: (videos) => {
-        this.videos = videos; // Assign the fetched videos to the component property
+        this.videos = videos;
       },
       error: (err) => {
-        console.error('Error fetching videos:', err); // Handle error appropriately
+        console.error('Error fetching videos:', err); 
       },
     });
   }
 
-  navigateToVideo(id: number) {
-    this.router.navigate(['/video', id]);
+  navigateToVideo(fileName: string) {
+    console.log('Navigating to video with id:', fileName);
+    this.router.navigate(['/video', fileName]);
   }
 }
 

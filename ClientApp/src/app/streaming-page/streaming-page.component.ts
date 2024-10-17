@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -12,11 +12,14 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class StreamingPageComponent {
   videoId: string | null = null;
   videoUrl: string | null = null;
+  private apiUrl: string;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, @Inject('AppConfig') private appConfig: any) {
+    this.apiUrl = appConfig.videoUrl; 
+  }
 
   ngOnInit(): void {
-    // Get the video ID from the route parameters
+
     this.route.paramMap.subscribe(params => {
       this.videoId = params.get('id');
       if (this.videoId) {
@@ -26,12 +29,10 @@ export class StreamingPageComponent {
   }
 
   getVideoUrl(videoId: string): string {
-    // Construct the URL to the video file in wwwroot
-    return `https://your-domain.com/videos/${videoId}`; // Adjust the path based on your server configuration
+    return `${this.apiUrl}/${videoId}`; 
   }
 
   goBack(): void {
-    // Navigate back to the previous page
-    this.router.navigate(['']); // Adjust the path if your home page has a different route
+    this.router.navigate(['']);
   }
 }

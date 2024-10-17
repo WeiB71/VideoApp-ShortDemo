@@ -4,7 +4,7 @@ import { Category } from '../shared/models/category.model';
 
 import { FormsModule } from '@angular/forms';
 import { VideoThumbnailService } from '../shared/service/video-thumbnail.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -27,12 +27,15 @@ export class UploadPageComponent {
   filteredCategories: Category[] = []; 
   thumbnailUrl: string | null = null;
 
+  fileSizeWarning: boolean = false;
+  maxFileSize = 100 * 1024 * 1024; // 100MB
 
-  constructor(private videoService: VideoService, private videoThumbnailService: VideoThumbnailService) {}
+
+  constructor(private videoService: VideoService, private videoThumbnailService: VideoThumbnailService, private router: Router) {}
 
   ngOnInit(): void {
     console.log ("init categories");
-    this.loadCategories(); // Load categories when the component initializes
+    this.loadCategories(); 
   }
 
   loadCategories(): void {
@@ -49,8 +52,13 @@ export class UploadPageComponent {
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.video.file = file; // Store the file for upload
-      this.generateThumbnail(file); // Generate thumbnail for the selected video
+      if (file.size > this.maxFileSize) {
+        this.fileSizeWarning = true;
+      } else {
+        this.fileSizeWarning = false;
+        this.video.file = file; 
+        this.generateThumbnail(file); 
+      }
     }
   }
 
@@ -82,7 +90,7 @@ export class UploadPageComponent {
     if (this.video.file) {
       formData.append('file', this.video.file as File);
     } else {
-      console.error('No video file selected.');
+      console.error('No video file selected.')
       return;
     }
     
@@ -99,6 +107,7 @@ export class UploadPageComponent {
     this.videoService.uploadVideo(formData).subscribe(
       (response: any) => {
         console.log('Video uploaded successfully:', response);
+        this.router.navigate(['']); 
       },
       (error: any) => {
         console.error('Error uploading video:', error);

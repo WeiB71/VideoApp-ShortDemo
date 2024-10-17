@@ -83,6 +83,7 @@ namespace VideoAppTests.Controllers.Api
                 Category = categoryData,
                 Thumbnail = thumbnail,
                 FilePath = filePath,
+                FileName = fileName
             };
 
             await _videoService.AddVideoAsync(video);

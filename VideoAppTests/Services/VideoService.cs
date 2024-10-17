@@ -10,7 +10,7 @@ namespace VideoAppTests.Services
 
         public async Task<List<Video>> GetAllVideosAsync()
         {
-            return await _context.Videos.ToListAsync();
+            return await _context.Videos.Include(v => v.Category).ToListAsync();
         }
 
         public async Task<Video> GetVideoByIdAsync(int id)

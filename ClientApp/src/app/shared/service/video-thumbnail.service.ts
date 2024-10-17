@@ -10,17 +10,17 @@ export class VideoThumbnailService {
     return new Promise((resolve, reject) => {
       const video = document.createElement('video');
       video.src = videoUrl;
-      video.currentTime = time; // Set the time to capture the thumbnail
+      video.currentTime = time; 
 
       video.addEventListener('loadeddata', () => {
         const canvas = document.createElement('canvas');
-        canvas.width = 300; // Set desired width
-        canvas.height = 200; // Set desired height
+        canvas.width = 300; 
+        canvas.height = 200; 
 
         const context = canvas.getContext('2d');
         if (context) {
           context.drawImage(video, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL('image/png')); // Return the image as base64
+          resolve(canvas.toDataURL('image/png')); 
         } else {
           reject('Failed to get canvas context');
         }

@@ -46,16 +46,21 @@
 
     <div class="mb-3">
       <label for="file" class="form-label">Video File</label>
+      <!-- Restrict file input to .avi, .mov, and .mp4 -->
       <input
         id="file"
         class="form-control"
         type="file"
         (change)="onFileChange($event)"
+        accept=".avi, .mov, .mp4"
         required
       />
+      <div *ngIf="fileSizeWarning" class="alert alert-danger" role="alert">
+        Video file exceeds the maximum allowed size of 100MB.
+      </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Upload Video</button>
+    <button type="submit" class="btn btn-primary" [disabled]="fileSizeWarning">Upload Video</button>
 
     <div class="thumbnail-preview" *ngIf="thumbnailUrl">
       <h5>Video Thumbnail</h5>

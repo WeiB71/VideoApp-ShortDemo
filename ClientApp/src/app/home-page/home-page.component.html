@@ -1,22 +1,22 @@
-<div class="video-list">
-    <h1>Video Library</h1>
-    <div class="row">
-      <div class="col-md-4" *ngFor="let video of videos">
-        <div class="card" (click)="navigateToVideo(video.id)" style="cursor: pointer;">
-          <img 
-            src="{{ video.thumbnail }}" 
-            class="card-img-top" 
-            alt="{{ video.title }}" 
-            style="width: 256px; height: 256px;"
-            title="{{ video.title }}"
-          />
-          <div class="card-body">
-            <h5 class="card-title">{{ video.title }}</h5>
-            <p class="card-text">{{ video.description | slice:0:160 }}/p>
-            <p class="card-text"><small class="text-muted">{{ video.categoryName}}</small></p>
-          </div>
+<div class="video-library">
+  <h1 class="text-center mb-4">Video Library</h1>
+  
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-4" *ngFor="let video of videos">
+      <div class="card shadow-sm video-card" (click)="navigateToVideo(video.fileName)" style="cursor: pointer;">
+        <img 
+          src="{{ video.thumbnail }}" 
+          class="card-img-top" 
+          alt="{{ video.title }}" 
+          style="height: 200px; object-fit: cover;"
+          title="{{ video.title }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ video.title }}</h5>
+          <p class="card-text">{{ video.description | slice: 0:100 }}...</p>
+          <p class="card-text"><small class="text-muted">{{ video.categoryName }}</small></p>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
